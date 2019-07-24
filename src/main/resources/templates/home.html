@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:include="fragments/header :: header">
+</head>
+<body>
+<!-- Nav Bar -->
+<div lang="en" th:include="fragments/navigation :: navigation"></div>
+<!-- End Nav bar -->
+<div class="container-fluid">
+    <h2>Task List</h2>
+    <hr/>
+
+    <div class = "todoList">
+
+            <table class="table table-bordered table-striped" id="todoItems">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Status</th>
+                    <th></th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="todo : ${todos}" th:class="${todo.completed}? active : warning" >
+
+                    <td th:text="${todo.description}">Description</td>
+                    <td th:text="${#temporals.format(todo.getCreated().toLocalDateTime(), 'dd-MM-yyyy HH:mm')}"> Start Time</td>
+                    <td th:text="${#temporals.format(todo.getModified().toLocalDateTime(), 'dd-MM-yyyy HH:mm')}"> End Time</td>
+                    <td><input type="checkbox" th:checked="${todo.completed} == true" th:readonly="true" /></td>
+                    <td><a class="btn btn-primary" th:href="@{todo}">Edit</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- Update Button -->
+
+
+    </div>
+    <hr/>
+    <div class="btn-group" role="group" aria-label="add-todo">
+        <a th:href="@{todo}"  class="button btn btn-primary">Add</a>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer">&copy; 2018</div>
+</body>
+</html>
